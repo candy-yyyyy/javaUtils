@@ -52,4 +52,50 @@ public class JsonUtils {
         }
         return jsonStr;
     }
+    /**
+     * @return com.alibaba.fastjson.JSONArray
+     * @Author tangguo
+     * @Description json根据字母a-z排序 只限于无节点并且无数组的情况
+     * @Date 17:26 2019/6/4
+     * @Param [jsonObj]
+     **/
+    private static JSONArray sort(JSONObject jsonObj) {
+        JSONArray arr = new JSONArray();
+        for (Map.Entry<String, Object> map : jsonObj.entrySet()) {
+            JSONObject bb = new JSONObject();
+            bb.put(map.getKey(), map.getValue());
+            arr.add(bb);
+        }
+        System.out.println(arr);
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = 0; j < arr.size() - 1 - i; j++) {
+                String aaa = arr.getJSONObject(j).keySet().iterator().next();
+                String bbb = arr.getJSONObject(j + 1).keySet().iterator().next();
+                int strLength = 0;
+                if (aaa.length() > bbb.length()) {
+                    strLength = bbb.length();
+                } else {
+                    strLength = aaa.length();
+                }
+                for (int k = 0; k < strLength; k++) {
+                    char aaaa = aaa.charAt(k);
+                    char bbbb = bbb.charAt(k);
+                    if (aaaa == bbbb) {
+                        continue;
+                    }
+                    if (aaaa > bbbb) {
+                        JSONObject ccc = (JSONObject) arr.getJSONObject(j).clone();
+                        arr.getJSONObject(j).clear();
+                        arr.getJSONObject(j).put(arr.getJSONObject(j + 1).keySet().iterator().next(), arr.getJSONObject(j + 1).getString(arr.getJSONObject(j + 1).keySet().iterator().next()));
+                        arr.getJSONObject(j + 1).clear();
+                        arr.getJSONObject(j + 1).put(ccc.keySet().iterator().next(), ccc.getString(ccc.keySet().iterator().next()));
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println(arr);
+        return arr;
+    }
 }
