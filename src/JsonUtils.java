@@ -1,4 +1,6 @@
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
 import java.util.ArrayList;
@@ -89,6 +91,7 @@ public class JsonUtils {
                         arr.getJSONObject(j).put(arr.getJSONObject(j + 1).keySet().iterator().next(), arr.getJSONObject(j + 1).getString(arr.getJSONObject(j + 1).keySet().iterator().next()));
                         arr.getJSONObject(j + 1).clear();
                         arr.getJSONObject(j + 1).put(ccc.keySet().iterator().next(), ccc.getString(ccc.keySet().iterator().next()));
+                        break;
                     } else {
                         break;
                     }
