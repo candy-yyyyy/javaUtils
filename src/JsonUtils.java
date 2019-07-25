@@ -17,6 +17,17 @@ import java.util.Map;
  * @Version 1.0
  **/
 public class JsonUtils {
+    public static void main(String[] args) {
+//        String str = "{\"numId\":[{\"niceInfo\":\"\",\"proKey\":\"AAAA\",\"serialNumber\":\"11111\"}]}";
+        String str = "{\"numId\":[{\"niceInfo\":\"\",\"proKey\":\"AAAA\",\"serialNumber\":\"1111\"}],\"test\":[{\"aaa\":\"\"},{\"bb\":\"\"}]}";
+        try{
+            Object object = filterNone(str);
+            JSONObject jsonInfo = (JSONObject) JSON.toJSON(object);
+            System.out.println(jsonInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     // 过滤值为[] "" null的报文节点
     public static Object filterNone(String jsonStr) throws Exception{
         if(jsonStr==null||jsonStr.equals("")||jsonStr.equals("null"))
@@ -26,14 +37,14 @@ public class JsonUtils {
             List<HashMap> list = JSON.parseArray(jsonStr, HashMap.class);
             for(int i=0;i<list.size();i++){
                 Map<String,Object> map = list.get(i);
+                Map<String,Object> maps = new HashMap<String, Object>();
                 for (Map.Entry<String, Object> entrys : map.entrySet()) {
-                    Map<String,Object> maps = new HashMap<String, Object>();
                     Object objs = filterNone(entrys.getValue().toString());
                     if(objs!=null){
                         maps.put(entrys.getKey(),objs);
                     }
                 }
-                lists.add(map);
+                lists.add(maps);
             }
             if(lists.size()==0)
                 return null;
