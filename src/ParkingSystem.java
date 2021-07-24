@@ -1,4 +1,3 @@
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +13,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 class ParkingSystem {
     class MyPair {
@@ -61,13 +61,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String[] arr = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        int[] intarr = {10, 15, 20};
-        int num = 4957;
-        String str = "aaa";
-        int[] arr1 = {0, 1, 0};
-        int[] arr2 = {0, 1, 0, 1};
-        System.out.println(new ParkingSystem().largeGroupPositions(str));
+        String str = "2?:?0";
+        new ParkingSystem().maximumTime(str);
     }
 
     public int maxDepth(String s) {
@@ -1519,23 +1514,334 @@ class ParkingSystem {
     // 228. 汇总区间
     public List<String> summaryRanges(int[] nums) {
         List<String> list = new ArrayList<>();
-        int i=0;
+        int i = 0;
 
-        while (i<nums.length) {
+        while (i < nums.length) {
             int start = i;
             i++;
-            while (i<nums.length && nums[i-1] + 1 == nums[i]) {
+            while (i < nums.length && nums[i - 1] + 1 == nums[i]) {
                 i++;
             }
             int end = i - 1;
             if (start == end) {
                 list.add(String.valueOf(nums[start]));
             } else {
-                list.add(nums[start] +"->" + nums[end]);
+                list.add(nums[start] + "->" + nums[end]);
             }
 
         }
         return list;
+    }
+
+    // 1486. 数组异或操作
+    public int xorOperation(int n, int start) {
+        int x = start;
+        for (int i = 1; i < n; i++) {
+            x = x ^ (start + 2 * i);
+        }
+        return x;
+    }
+
+    // 421. 数组中两个数的最大异或值
+    public int findMaximumXOR(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int max = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i; j < nums.length; j++) {
+                int n = nums[i] ^ nums[j];
+                max = Math.max(max, n);
+            }
+        }
+        return max;
+    }
+
+    // 993. 二叉树的堂兄弟节点
+   /* public boolean isCousins(TreeNode root, int x, int y) {
+
+        while (root != null) {
+            int left = root.left.val;
+            int right = root.right.val;
+        }
+    }*/
+
+    //    754. 长度为三且各字符不同的子字符串
+    public int countGoodSubstrings(String s) {
+        if (s.length() <= 2) {
+            return 0;
+        }
+        int n = 0;
+        for (int i = 0; i < s.length() - 2; i++) {
+            if (s.charAt(i) != s.charAt(i + 1) && s.charAt(i) != s.charAt(i + 2) && s.charAt(i + 1) != s.charAt(i + 2)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+    // 5755. 数组中最大数对和的最小值
+    public int minPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int mix = 0;
+        for (int i = 0; i < nums.length / 2; i++) {
+            mix = Math.max(mix, nums[i] + nums[nums.length - i - 1]);
+        }
+        return mix;
+    }
+
+    //    5772. 检查某单词是否等于两单词之和
+    public boolean isSumEqual(String firstWord, String secondWord, String targetWord) {
+        int a = sumWord(firstWord);
+        int b = sumWord(secondWord);
+        int c = sumWord(targetWord);
+        if (a + b == c) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int sumWord(String str) {
+        char[] s = str.toCharArray();
+        String sum = "";
+        for (int i = 0; i < s.length; i++) {
+            sum += Integer.valueOf(s[i]) - 97;
+        }
+        return Integer.valueOf(sum);
+    }
+
+    //    5773. 插入后的最大值
+    public String maxValue(String n, int x) {
+        String str = "";
+        Boolean flag = true;
+        if (n.contains("-")) {
+            str += "-";
+            n = n.replace("-", "");
+            String[] arr = n.split("");
+            List<String> list = new ArrayList<>(Arrays.asList(arr));
+            for (int i = 0; i < list.size(); i++) {
+                if (x < Integer.parseInt(list.get(i)) && flag) {
+                    str += String.valueOf(x);
+                    flag = false;
+                }
+                str += list.get(i);
+            }
+        } else {
+            String[] arr = n.split("");
+            List<String> list = new ArrayList<>(Arrays.asList(arr));
+            for (int i = 0; i < list.size(); i++) {
+                if (x > Integer.parseInt(list.get(i)) && flag) {
+                    str += String.valueOf(x);
+                    flag = false;
+                }
+                str += list.get(i);
+            }
+        }
+        if (flag) {
+            str += String.valueOf(x);
+        }
+        return str;
+    }
+
+    // 231. 2 的幂
+    public boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        while (n != 0) {
+            if (n % 2 != 0 && n / 2 != 0) {
+                return false;
+            }
+            n /= 2;
+        }
+        return true;
+    }
+
+    // 203. 移除链表元素
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode newNode = new ListNode(-1);
+        addNewListNode(head, newNode, val);
+        return newNode.next;
+    }
+
+    // 递归 新增一个新的链表保存数据
+    private void addNewListNode(ListNode head, ListNode newListNode, int val) {
+        if (head != null) {
+            if (head.val != val) {
+                // 节点的值不等于排除值val时 写入新节点
+                newListNode.next = new ListNode(head.val);
+            }
+            // newListNode的next节点为空时表示当前递归并未赋值，因此传入的是当前节点
+            addNewListNode(head.next, newListNode.next == null ? newListNode : newListNode.next, val);
+        }
+    }
+
+    // 494. 目标和
+    int count = 0;
+
+    public int findTargetSumWays(int[] nums, int target) {
+        equalsAddTarget(0, target, 0, nums);
+        return count;
+    }
+
+    private void equalsAddTarget(int sum, int target, int index, int[] nums) {
+        if (index == nums.length && sum == target) {
+            count++;
+        } else {
+            equalsAddTarget(sum + nums[index], target, index + 1, nums);
+            equalsAddTarget(sum - nums[index], target, index + 1, nums);
+        }
+    }
+
+    // 168
+    public String convertToTitle(int columnNumber) {
+        String str = "";
+        int a = columnNumber;
+        // 循环26进制
+        while (a > 26) {
+            a = a / 26;
+            str = String.valueOf((char) (64 + a)) + str;
+        }
+        //
+        int b = columnNumber % 26;
+        if (b > 0) {
+            str = str + String.valueOf((char) (64 + b));
+        }
+
+        return str;
+    }
+
+    public int majorityElement(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        int length = nums.length;
+        int half = (length + 1) / 2;
+        for (int i = 0; i < length; i++) {
+            int num = nums[i];
+            if (map.containsKey(num)) {
+                int k = map.get(num).intValue();
+                k++;
+                map.put(num, k);
+                if (k >= half) {
+                    return num;
+                }
+            } else {
+                map.put(num, 1);
+            }
+        }
+        return -1;
+    }
+
+    // 5792
+    public int countTriples(int n) {
+        int max = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                double x = Math.sqrt(Math.pow(i, 2) + Math.pow(j, 2));
+                double y = x % 1;
+                if (y == 0 && x <= n) {
+                    max++;
+                }
+            }
+        }
+        return max;
+    }
+
+    // 5808
+    public int[] getConcatenation(int[] nums) {
+        List<Integer> list1 = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        List<Integer> list2 = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        list1.addAll(list2);
+        int[] arr = new int[nums.length * 2];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = list1.get(i);
+        }
+        return arr;
+    }
+
+    // 剑指 Offer 53 - I. 在排序数组中查找数字 I
+    public int search(int[] nums, int target) {
+        int num = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    // 剑指 Offer 42. 连续子数组的最大和
+    public int maxSubArray(int[] nums) {
+        int pre = 0;
+        int max = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            pre = Math.max(pre + nums[i], nums[i]);
+            max = Math.max(pre, max);
+        }
+        return max;
+    }
+
+    // 5161. 可以输入的最大单词数
+    public int canBeTypedWords(String text, String brokenLetters) {
+        String[] wordArr = text.split(" ");
+        int count = wordArr.length;
+        char[] chars = brokenLetters.toCharArray();
+        for (int i = 0; i < wordArr.length; i++) {
+            for (int i1 = 0; i1 < chars.length; i1++) {
+                if (wordArr[i].contains(String.valueOf(chars[i1]))) {
+                    count--;
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+
+    // 5804. 检查是否所有字符出现次数相同
+    public boolean areOccurrencesEqual(String s) {
+        char[] chars = s.toCharArray();
+        String first = String.valueOf(chars[0]);
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < chars.length; i++) {
+            String charStr = String.valueOf(chars[i]);
+            if (map.containsKey(charStr)) {
+                map.put(charStr, (Integer) map.get(charStr) + 1);
+            } else {
+                map.put(charStr, 1);
+            }
+        }
+        int count = (Integer) map.get(first);
+        if (map.entrySet().stream().anyMatch(e -> e.getValue() != count)) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    // 1736. 替换隐藏数字得到的最晚时间
+    public String maximumTime(String time) {
+        time = time.replace(":", "");
+        char[] chars = time.toCharArray();
+        if (chars[0] == '?') {
+            if (chars[1] == '?') {
+                chars[0] = '2';
+            } else if (Integer.valueOf(String.valueOf(chars[1])) >= 4) {
+                chars[0] = '1';
+            } else {
+                chars[0] = '2';
+            }
+        }
+        chars[1] = chars[1] == '?' && chars[0] == '?' ? '3' : chars[1];
+        chars[1] = chars[1] == '?' && chars[0] == '0' ? '9' : chars[1];
+        chars[1] = chars[1] == '?' && chars[0] == '1' ? '9' : chars[1];
+        chars[1] = chars[1] == '?' && chars[0] == '2' ? '3' : chars[1];
+        chars[2] = chars[2] == '?' ? '5' : chars[2];
+        chars[3] = chars[3] == '?' ? '9' : chars[3];
+        return String.valueOf(chars[0]) + String.valueOf(chars[1])+ ":" + String.valueOf(chars[2]) + String.valueOf(chars[3]);
     }
 }
 
