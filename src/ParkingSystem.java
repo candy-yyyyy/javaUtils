@@ -1,16 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -1842,6 +1830,23 @@ class ParkingSystem {
         chars[2] = chars[2] == '?' ? '5' : chars[2];
         chars[3] = chars[3] == '?' ? '9' : chars[3];
         return String.valueOf(chars[0]) + String.valueOf(chars[1])+ ":" + String.valueOf(chars[2]) + String.valueOf(chars[3]);
+    }
+
+    // 171. Excel表列序号
+    public int titleToNumber(String columnTitle) {
+        char[] chars = columnTitle.toCharArray();
+        int index = 0;
+        int num = 0;
+        for (int i = chars.length - 1; i >= 0; i--) {
+            num += charToInt(chars[i]) * Math.pow(26,index);
+            index++;
+        }
+        return num;
+    }
+
+    public int charToInt(char word) {
+        int num = word;
+        return num - 64;
     }
 }
 
