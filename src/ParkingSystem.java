@@ -49,8 +49,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String str = "2?:?0";
-        new ParkingSystem().maximumTime(str);
+        int[][] mat = {{1, 1, 0, 0, 0}, {1, 1, 1, 1, 0}, {1, 0, 0, 0, 0}, {1, 1, 0, 0, 0}, {1, 1, 1, 1, 1}};
+        int k = 3;
+        new ParkingSystem().kWeakestRows(mat, k);
     }
 
     public int maxDepth(String s) {
@@ -1829,7 +1830,7 @@ class ParkingSystem {
         chars[1] = chars[1] == '?' && chars[0] == '2' ? '3' : chars[1];
         chars[2] = chars[2] == '?' ? '5' : chars[2];
         chars[3] = chars[3] == '?' ? '9' : chars[3];
-        return String.valueOf(chars[0]) + String.valueOf(chars[1])+ ":" + String.valueOf(chars[2]) + String.valueOf(chars[3]);
+        return String.valueOf(chars[0]) + String.valueOf(chars[1]) + ":" + String.valueOf(chars[2]) + String.valueOf(chars[3]);
     }
 
     // 171. Excel表列序号
@@ -1838,7 +1839,7 @@ class ParkingSystem {
         int index = 0;
         int num = 0;
         for (int i = chars.length - 1; i >= 0; i--) {
-            num += charToInt(chars[i]) * Math.pow(26,index);
+            num += charToInt(chars[i]) * Math.pow(26, index);
             index++;
         }
         return num;
@@ -1847,6 +1848,48 @@ class ParkingSystem {
     public int charToInt(char word) {
         int num = word;
         return num - 64;
+    }
+
+    // 1337. 矩阵中战斗力最弱的 K 行
+    public int[] kWeakestRows(int[][] mat, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> indexList = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        // 循环数组 取得每一行中的数字大小
+        for (int i = 0; i < mat.length; i++) {
+            int num = 0;
+            for (int j = 0; j < mat[i].length; j++) {
+                if (mat[i][j] == 1) {
+                    num++;
+                } else {
+                    break;
+                }
+            }
+            list.add(i, num);
+        }
+
+        while (indexList.size() < k) {
+            int minValue = Integer.MAX_VALUE;
+            for (Integer integer : list) {
+                minValue = Math.min(minValue, integer);
+            }
+
+            // 将list的当前最小值的索引记录下来
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) == minValue) {
+                    // 将此时最小值索引赋值为最大值 避免下次循环再次找到当前最小值
+                    list.set(i, Integer.MAX_VALUE);
+                    indexList.add(i);
+                    break;
+                }
+            }
+        }
+
+        int[] arr = new int[k];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = indexList.get(i);
+        }
+        return arr;
     }
 }
 
