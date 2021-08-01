@@ -49,9 +49,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[][] mat = {{1, 1, 0, 0, 0}, {1, 1, 1, 1, 0}, {1, 0, 0, 0, 0}, {1, 1, 0, 0, 0}, {1, 1, 1, 1, 1}};
-        int k = 3;
-        new ParkingSystem().kWeakestRows(mat, k);
+        int n = 1;
+        System.out.println(new ParkingSystem().isThree(n));
     }
 
     public int maxDepth(String s) {
@@ -1890,6 +1889,25 @@ class ParkingSystem {
             arr[i] = indexList.get(i);
         }
         return arr;
+    }
+
+    // 5830. 三除数
+    public boolean isThree(int n) {
+        if (n == 1) {
+            return false;
+        }
+        double sqrt = Math.sqrt(n);
+        if (sqrt % 1 == 0) {
+            int mid = (int) sqrt;
+            for (int i = 2; i < mid; i++) {
+                if (n % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
