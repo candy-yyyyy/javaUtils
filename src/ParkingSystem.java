@@ -1909,6 +1909,29 @@ class ParkingSystem {
             return false;
         }
     }
+
+    // 5193. 删除字符使字符串变好
+    public String makeFancyString(String s) {
+        char[] chars = s.toCharArray();
+        char previous = chars[0];
+        int index = 1;
+        // 这里使用stringbuilder拼接字符串才通过测试用例 string += 效率太低导致测试用例超时
+        StringBuilder result = new StringBuilder(String.valueOf(s.charAt(0)));
+        for (int i = 1; i < chars.length; i++) {
+            if (previous != chars[i]) {
+                index = 0;
+            }
+            if (index >= 3) {
+                continue;
+            }
+            previous = chars[i];
+            index++;
+            if (index < 3) {
+                result.append(String.valueOf(chars[i]));
+            }
+        }
+        return new String(result);
+    }
 }
 
 /**
