@@ -49,8 +49,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int n = 5;
-        System.out.println(new ParkingSystem().tribonacci(n));
+        String s = "iloveleetcode";
+        String[] words = {"i","love","leetcode","apples"};
+        System.out.println(new ParkingSystem().isPrefixString(s, words));
     }
 
     public int maxDepth(String s) {
@@ -1944,14 +1945,50 @@ class ParkingSystem {
         if (n == 2) {
             return 1;
         }
-        int[] arr = new int[n+1];
+        int[] arr = new int[n + 1];
         arr[0] = 0;
         arr[1] = 1;
         arr[2] = 1;
         for (int i = 3; i <= n; i++) {
-            arr[i] = arr[i-3] + arr[i-2] + arr[i-1];
+            arr[i] = arr[i - 3] + arr[i - 2] + arr[i - 1];
         }
-        return arr[arr.length-1];
+        return arr[arr.length - 1];
+    }
+
+    // 5838. 检查字符串是否为数组前缀
+    public boolean isPrefixString(String s, String[] words) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            sb.append(words[i]);
+            if (s.equals(sb.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 551. 学生出勤记录 I
+    public boolean checkRecord(String s) {
+        char[] chars = s.toCharArray();
+        int lateNum = 0;
+        int absendNum = 0;
+        for (char aChar : chars) {
+            if (aChar == 'A') {
+                absendNum++;
+                if (absendNum >= 2) {
+                    return false;
+                }
+            }
+            if (aChar == 'L') {
+                lateNum ++;
+                if (lateNum >= 3) {
+                    return false;
+                }
+            } else {
+                lateNum = 0;
+            }
+        }
+        return true;
     }
 }
 
