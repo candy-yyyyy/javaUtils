@@ -1,3 +1,5 @@
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @ClassName TestUtils
  * @Description
@@ -6,4 +8,8 @@
  * @Version 1.0
  **/
 public class TestUtils {
+    public static void main(String[] args) {
+        int a = 'b' - 'a';
+        System.out.println(a);
+    }
 }

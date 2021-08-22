@@ -1990,6 +1990,38 @@ class ParkingSystem {
         }
         return true;
     }
+
+    // 5834. 使用特殊打字机键入单词的最少时间
+    public int minTimeToType(String word) {
+        char[] chars = word.toCharArray();
+        char thelastchar = 'a';
+        int num = 0;
+        for (char aChar : chars) {
+            int step = aChar - thelastchar;
+            if (step < 0) {
+                step = 0 - step;
+            }
+            if (step > 13) {
+                step = 26 - step;
+            }
+            num = num + step + 1;
+            thelastchar = aChar;
+        }
+        return num;
+    }
+
+    // 5850. 找出数组的最大公约数
+    public int findGCD(int[] nums) {
+        Arrays.sort(nums);
+        int min = nums[0];
+        int max = nums[nums.length-1];
+        for (int i = min; i > 0; i--) {
+            if (max % i == 0 && min % i == 0) {
+                return i;
+            }
+        }
+        return 1;
+    }
 }
 
 /**
