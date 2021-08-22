@@ -49,9 +49,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String s = "iloveleetcode";
-        String[] words = {"i","love","leetcode","apples"};
-        System.out.println(new ParkingSystem().isPrefixString(s, words));
+        int n = 4;
+        System.out.println(new ParkingSystem().getMaximumGenerated(n));
     }
 
     public int maxDepth(String s) {
@@ -1980,7 +1979,7 @@ class ParkingSystem {
                 }
             }
             if (aChar == 'L') {
-                lateNum ++;
+                lateNum++;
                 if (lateNum >= 3) {
                     return false;
                 }
@@ -2014,13 +2013,36 @@ class ParkingSystem {
     public int findGCD(int[] nums) {
         Arrays.sort(nums);
         int min = nums[0];
-        int max = nums[nums.length-1];
+        int max = nums[nums.length - 1];
         for (int i = min; i > 0; i--) {
             if (max % i == 0 && min % i == 0) {
                 return i;
             }
         }
         return 1;
+    }
+
+    // 1646. 获取生成数组中的最大值
+    public int getMaximumGenerated(int n) {
+        int[] arr = new int[n + 1];
+        int max = 0;
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        }
+        arr[0] = 0;
+        arr[1] = 1;
+        max = 1;
+        for (int i = 2; i <= n; i++) {
+            if (i % 2 == 0) {
+                arr[i] = arr[i / 2];
+            } else {
+                arr[i] = arr[i / 2] + arr[i / 2 + 1];
+            }
+            max = Math.max(arr[i], max);
+        }
+        return max;
     }
 }
 
