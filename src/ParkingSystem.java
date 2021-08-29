@@ -2044,6 +2044,18 @@ class ParkingSystem {
         }
         return max;
     }
+
+    // 5854. 学生分数的最小差值
+    public int minimumDifference(int[] nums, int k) {
+        // 1,4,7,9 2
+        Arrays.sort(nums);
+        int min = Integer.MAX_VALUE;
+        for (int i=0;i<nums.length && k - 1+ i < nums.length;i++) {
+            int num = nums[k - 1 + i] - nums[i];
+            min = Math.min(num, min);
+        }
+        return min;
+    }
 }
 
 /**
