@@ -2056,6 +2056,32 @@ class ParkingSystem {
         }
         return min;
     }
+
+    // 5846. 找到数组的中间位置
+    public int findMiddleIndex(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (sumleft(i,nums) == sumright(i,nums)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int sumleft(int index, int[] nums) {
+        int sum = 0;
+        for (int i = 0; i < index; i++) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+
+    public int sumright(int index, int[] nums) {
+        int sum = 0;
+        for (int i = nums.length-1; i > index; i--) {
+            sum += nums[i];
+        }
+        return sum;
+    }
 }
 
 /**
