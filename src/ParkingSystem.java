@@ -49,7 +49,7 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] n = {1,1,1,3,5};
+        int[] n = {1, 1, 1, 3, 5};
         System.out.println(new ParkingSystem().countQuadruplets(n));
     }
 
@@ -2050,7 +2050,7 @@ class ParkingSystem {
         // 1,4,7,9 2
         Arrays.sort(nums);
         int min = Integer.MAX_VALUE;
-        for (int i=0;i<nums.length && k - 1+ i < nums.length;i++) {
+        for (int i = 0; i < nums.length && k - 1 + i < nums.length; i++) {
             int num = nums[k - 1 + i] - nums[i];
             min = Math.min(num, min);
         }
@@ -2060,7 +2060,7 @@ class ParkingSystem {
     // 5846. 找到数组的中间位置
     public int findMiddleIndex(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            if (sumleft(i,nums) == sumright(i,nums)){
+            if (sumleft(i, nums) == sumright(i, nums)) {
                 return i;
             }
         }
@@ -2077,7 +2077,7 @@ class ParkingSystem {
 
     public int sumright(int index, int[] nums) {
         int sum = 0;
-        for (int i = nums.length-1; i > index; i--) {
+        for (int i = nums.length - 1; i > index; i--) {
             sum += nums[i];
         }
         return sum;
@@ -2086,9 +2086,9 @@ class ParkingSystem {
     public int countQuadruplets(int[] nums) {
         int num = 0;
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i+1; j < nums.length; j++) {
-                for (int k = j+1; k < nums.length; k++) {
-                    for (int l = k+1 ; l < nums.length; l++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    for (int l = k + 1; l < nums.length; l++) {
                         if (nums[i] + nums[j] + nums[k] == nums[l]) {
                             num++;
                         }
@@ -2097,6 +2097,33 @@ class ParkingSystem {
             }
         }
         return num;
+    }
+
+    // 5859. 差的绝对值为 K 的数对数目
+    public int countKDifference(int[] nums, int k) {
+        int num = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (Math.abs(nums[i] - nums[j]) == k) {
+                    num ++;
+                }
+            }
+        }
+        return num;
+    }
+
+    // 1436. 旅行终点站
+    public String destCity(List<List<String>> paths) {
+        Set<String> citiesA = new HashSet<String>();
+        for (List<String> path : paths) {
+            citiesA.add(path.get(0));
+        }
+        for (List<String> path : paths) {
+            if (!citiesA.contains(path.get(1))) {
+                return path.get(1);
+            }
+        }
+        return "";
     }
 }
 
