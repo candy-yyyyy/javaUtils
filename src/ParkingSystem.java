@@ -2143,6 +2143,20 @@ class ParkingSystem {
         }
         return arr;
     }
+
+    // 5872. 连接后等于目标字符串的字符串对
+    public int numOfPairs(String[] nums, String target) {
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i != j && (nums[i] + nums[j]).equals(target)) {
+                    total ++;
+                }
+            }
+        }
+        return total;
+    }
+
 }
 
 /**
