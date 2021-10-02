@@ -2125,6 +2125,24 @@ class ParkingSystem {
         }
         return "";
     }
+
+    // 5871. 将一维数组转变成二维数组
+    public int[][] construct2DArray(int[] original, int m, int n) {
+        int length = original.length;
+        int total = m * n;
+        if (total != length) {
+            return new int[0][0];
+        }
+        int[][] arr = new int[m][n];
+        int index = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                arr[i][j] = original[index];
+                index ++;
+            }
+        }
+        return arr;
+    }
 }
 
 /**
