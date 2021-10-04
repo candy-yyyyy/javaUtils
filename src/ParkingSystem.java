@@ -2157,6 +2157,29 @@ class ParkingSystem {
         return total;
     }
 
+    // 482. 密钥格式化
+    public String licenseKeyFormatting(String s, int k) {
+        s = s.toUpperCase();
+        s = s.replaceAll("-", "");
+        int length = s.length();
+        int firstStr =  length % k;
+        int n = length / k;
+        String result = "";
+        if (firstStr != 0) {
+            result = s.substring(0, firstStr);
+            if (n != 0) {
+                result += "-";
+            }
+            s = s.substring(firstStr, length);
+        }
+        for (int i = 0; i < n; i++) {
+            result += s.substring(i * k, (i+1) * k);
+            if (i != n-1) {
+                result += "-";
+            }
+        }
+        return result;
+    }
 }
 
 /**
