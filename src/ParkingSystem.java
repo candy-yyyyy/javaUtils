@@ -49,8 +49,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] n = {1, 1, 1, 3, 5};
-        System.out.println(new ParkingSystem().countQuadruplets(n));
+        String n = "";
+        System.out.println(new ParkingSystem().countSegments(n));
     }
 
     public int maxDepth(String s) {
@@ -2179,6 +2179,19 @@ class ParkingSystem {
             }
         }
         return result;
+    }
+
+    // 434. 字符串中的单词数
+    public int countSegments(String s) {
+        int cnt = 0;
+        String[] ans = s.split(" ");
+        for (int i = 0; i < ans.length; i++) {
+            String str = ans[i].trim();
+            if (!"".equals(str)) {
+                cnt ++;
+            }
+        }
+        return cnt;
     }
 }
 
