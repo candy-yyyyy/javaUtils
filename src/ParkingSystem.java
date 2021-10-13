@@ -2105,7 +2105,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (Math.abs(nums[i] - nums[j]) == k) {
-                    num ++;
+                    num++;
                 }
             }
         }
@@ -2138,7 +2138,7 @@ class ParkingSystem {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = original[index];
-                index ++;
+                index++;
             }
         }
         return arr;
@@ -2150,7 +2150,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length; j++) {
                 if (i != j && (nums[i] + nums[j]).equals(target)) {
-                    total ++;
+                    total++;
                 }
             }
         }
@@ -2162,7 +2162,7 @@ class ParkingSystem {
         s = s.toUpperCase();
         s = s.replaceAll("-", "");
         int length = s.length();
-        int firstStr =  length % k;
+        int firstStr = length % k;
         int n = length / k;
         String result = "";
         if (firstStr != 0) {
@@ -2173,12 +2173,29 @@ class ParkingSystem {
             s = s.substring(firstStr, length);
         }
         for (int i = 0; i < n; i++) {
-            result += s.substring(i * k, (i+1) * k);
-            if (i != n-1) {
+            result += s.substring(i * k, (i + 1) * k);
+            if (i != n - 1) {
                 result += "-";
             }
         }
         return result;
+    }
+
+    // 412. Fizz Buzz
+    public List<String> fizzBuzz(int n) {
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                list.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                list.add("Fizz");
+            } else if (i % 5 == 0) {
+                list.add("Buzz");
+            } else {
+                list.add(String.valueOf(i));
+            }
+        }
+        return list;
     }
 }
 
