@@ -2195,6 +2195,16 @@ class ParkingSystem {
         }
         return cnt;
     }
+
+    // 剑指 Offer II 069. 山峰数组的顶部
+    public int peakIndexInMountainArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i+1] < arr[i]) {
+                return i;
+            }
+        }
+        return 1;
+    }
 }
 
 /**
