@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -49,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] n = {1, 1, 1, 3, 5};
-        System.out.println(new ParkingSystem().countQuadruplets(n));
+        String[] n = {"d","b","c","b","c","a"};
+        System.out.println(new ParkingSystem().kthDistinct(n,2));
     }
 
     public int maxDepth(String s) {
@@ -2217,6 +2219,44 @@ class ParkingSystem {
         return num;
     }
 
+    // 5902. 检查句子中的数字是否递增
+    public boolean areNumbersAscending(String s) {
+        int num = Integer.MIN_VALUE;
+        String[] s1 = s.split(" ");
+        for (int i = 0; i < s1.length; i++) {
+            boolean isNum = s1[i].matches("[0-9]+");
+            if (isNum) {
+                if (num < Integer.parseInt(s1[i])) {
+                    num = Integer.parseInt(s1[i]);
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // 5898. 数组中第 K 个独一无二的字符串
+    public String kthDistinct(String[] arr, int k) {
+        Map<String,Integer> map = new LinkedHashMap<>();
+        for (String s : arr) {
+            if (map.containsKey(s)) {
+                map.put(s, (Integer) map.get(s) + 1);
+            } else{
+                map.put(s, 1);
+            }
+        }
+        int n = 0;
+        for (Map.Entry<String, Integer> stringIntegerEntry : map.entrySet()) {
+            if (stringIntegerEntry.getValue() == 1) {
+                n ++;
+                if (n == k) {
+                    return stringIntegerEntry.getKey();
+                }
+            }
+        }
+        return "";
+    }
 }
 
 /**
