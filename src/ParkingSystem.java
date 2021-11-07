@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String[] n = {"d","b","c","b","c","a"};
-        System.out.println(new ParkingSystem().kthDistinct(n,2));
+        String word = "aeiouu";
+        System.out.println(new ParkingSystem().countVowelSubstrings(word));
     }
 
     public int maxDepth(String s) {
@@ -2277,6 +2277,52 @@ class ParkingSystem {
             }
         }
         return nums.length;
+    }
+
+    // 5918. 统计字符串中的元音子字符串
+    public int countVowelSubstrings(String word) {
+        if (word.length() < 5) {
+            return 0;
+        }
+        int count = 0;
+        int length = word.length();
+        for (int i = 0; i + 5 <= length; i++) {
+            int n = i + 5;
+            String wordstr = word.substring(i, n);
+            while(checkVowel(wordstr) == 0 || checkVowel(wordstr) == 1) {
+                if (checkVowel(wordstr) == 0) {
+                    count ++;
+                }
+                n ++;
+                if (n > length) {
+                    break;
+                }
+                wordstr = word.substring(i, n);
+            }
+        }
+        return count;
+    }
+
+    public int checkVowel(String word) {
+        // 判断是否满足连续且只有元音的字符串
+        char[] chars = word.toCharArray();
+        Set<Character> set = new HashSet<>();
+        set.add('a');
+        set.add('e');
+        set.add('i');
+        set.add('o');
+        set.add('u');
+        for (char aChar : chars) {
+            set.remove(aChar);
+            if (aChar != 'a' && aChar != 'e' && aChar != 'i' && aChar != 'o' && aChar != 'u') {
+                return 2;
+            }
+        }
+        if (set.isEmpty()) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }
 
