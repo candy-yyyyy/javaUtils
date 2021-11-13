@@ -2324,6 +2324,23 @@ class ParkingSystem {
             return 1;
         }
     }
+
+    // 5910. 检查两个字符串是否几乎相等
+    public boolean checkAlmostEquivalent(String word1, String word2) {
+        int[] arr = new int[26];
+        char[] chars = word1.toCharArray();
+        char[] chars1 = word2.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            arr[chars[i] - 'a'] ++;
+            arr[chars1[i] - 'a'] --;
+        }
+        for (int i : arr) {
+            if (Math.abs(i) > 3) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 /**
