@@ -2107,7 +2107,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (Math.abs(nums[i] - nums[j]) == k) {
-                    num ++;
+                    num++;
                 }
             }
         }
@@ -2140,7 +2140,7 @@ class ParkingSystem {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = original[index];
-                index ++;
+                index++;
             }
         }
         return arr;
@@ -2152,7 +2152,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length; j++) {
                 if (i != j && (nums[i] + nums[j]).equals(target)) {
-                    total ++;
+                    total++;
                 }
             }
         }
@@ -2164,7 +2164,7 @@ class ParkingSystem {
         s = s.toUpperCase();
         s = s.replaceAll("-", "");
         int length = s.length();
-        int firstStr =  length % k;
+        int firstStr = length % k;
         int n = length / k;
         String result = "";
         if (firstStr != 0) {
@@ -2175,14 +2175,13 @@ class ParkingSystem {
             s = s.substring(firstStr, length);
         }
         for (int i = 0; i < n; i++) {
-            result += s.substring(i * k, (i+1) * k);
-            if (i != n-1) {
+            result += s.substring(i * k, (i + 1) * k);
+            if (i != n - 1) {
                 result += "-";
             }
         }
         return result;
     }
-
 
 
     // 434. 字符串中的单词数
@@ -2192,7 +2191,7 @@ class ParkingSystem {
         for (int i = 0; i < ans.length; i++) {
             String str = ans[i].trim();
             if (!"".equals(str)) {
-                cnt ++;
+                cnt++;
             }
         }
         return cnt;
@@ -2201,7 +2200,7 @@ class ParkingSystem {
     // 剑指 Offer II 069. 山峰数组的顶部
     public int peakIndexInMountainArray(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i+1] < arr[i]) {
+            if (arr[i + 1] < arr[i]) {
                 return i;
             }
         }
@@ -2238,18 +2237,18 @@ class ParkingSystem {
 
     // 5898. 数组中第 K 个独一无二的字符串
     public String kthDistinct(String[] arr, int k) {
-        Map<String,Integer> map = new LinkedHashMap<>();
+        Map<String, Integer> map = new LinkedHashMap<>();
         for (String s : arr) {
             if (map.containsKey(s)) {
                 map.put(s, (Integer) map.get(s) + 1);
-            } else{
+            } else {
                 map.put(s, 1);
             }
         }
         int n = 0;
         for (Map.Entry<String, Integer> stringIntegerEntry : map.entrySet()) {
             if (stringIntegerEntry.getValue() == 1) {
-                n ++;
+                n++;
                 if (n == k) {
                     return stringIntegerEntry.getKey();
                 }
@@ -2261,7 +2260,7 @@ class ParkingSystem {
     // 5914. 值相等的最小索引
     public int smallestEqual(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            if (i % 10  == nums[i]) {
+            if (i % 10 == nums[i]) {
                 return i;
             }
         }
@@ -2289,11 +2288,11 @@ class ParkingSystem {
         for (int i = 0; i + 5 <= length; i++) {
             int n = i + 5;
             String wordstr = word.substring(i, n);
-            while(checkVowel(wordstr) == 0 || checkVowel(wordstr) == 1) {
+            while (checkVowel(wordstr) == 0 || checkVowel(wordstr) == 1) {
                 if (checkVowel(wordstr) == 0) {
-                    count ++;
+                    count++;
                 }
-                n ++;
+                n++;
                 if (n > length) {
                     break;
                 }
@@ -2331,8 +2330,8 @@ class ParkingSystem {
         char[] chars = word1.toCharArray();
         char[] chars1 = word2.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            arr[chars[i] - 'a'] ++;
-            arr[chars1[i] - 'a'] --;
+            arr[chars[i] - 'a']++;
+            arr[chars1[i] - 'a']--;
         }
         for (int i : arr) {
             if (Math.abs(i) > 3) {
@@ -2340,6 +2339,84 @@ class ParkingSystem {
             }
         }
         return true;
+    }
+
+    // 5926. 买票需要的时间
+    public int timeRequiredToBuy(int[] tickets, int k) {
+        int sum = 0;
+        int n = tickets[k];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < tickets.length; j++) {
+                if (tickets[j] == 0) {
+                    continue;
+                }
+                sum++;
+                tickets[j]--;
+                if (tickets[k] == 0) {
+                    return sum;
+                }
+            }
+        }
+        return sum;
+    }
+
+    // 5922. 统计出现过一次的公共字符串
+    public int countWords(String[] words1, String[] words2) {
+        Map<String, Object> map = new HashMap<>();
+        for (String s : words1) {
+            if (map.containsKey(s)) {
+                int n = (Integer) map.get(s);
+                map.put(s, ++n);
+            } else {
+                map.put(s, 1);
+            }
+        }
+        int count = 0;
+        Map<String, Object> existMap = new HashMap<>();
+        for (String s : words2) {
+            if (existMap.containsKey(s) && map.containsKey(s)) {
+                count--;
+                map.remove(s);
+            }
+            if (map.containsKey(s) && 1 == (Integer) map.get(s)) {
+                count++;
+                existMap.put(s, 1);
+            }
+        }
+        return count;
+    }
+
+    // 5938. 找出数组排序后的目标下标
+    public List<Integer> targetIndices(int[] nums, int target) {
+        List<Integer> list = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
+
+    // 1005. K 次取反后最大化的数组和
+    public int largestSumAfterKNegations(int[] nums, int k) {
+        int total = 0;
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (k > 0 && nums[i] < 0) {
+                nums[i] = 0 - nums[i];
+                k --;
+            }
+        }
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (k % 2 != 0) {
+                nums[i] = 0 - nums[i];
+                k = 0;
+            }
+            total += nums[i];
+        }
+        return total;
     }
 }
 
