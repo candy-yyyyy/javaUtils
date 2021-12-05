@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String word = "aeiouu";
-        System.out.println(new ParkingSystem().countVowelSubstrings(word));
+        int[] word = {2,1,3,0};
+        System.out.println(new ParkingSystem().findEvenNumbers(word));
     }
 
     public int maxDepth(String s) {
@@ -2417,6 +2417,56 @@ class ParkingSystem {
             total += nums[i];
         }
         return total;
+    }
+
+    // 383. 赎金信
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] arr = new int[26];
+        char[] chars = magazine.toCharArray();
+        for (char aChar : chars) {
+            arr[aChar - 'a'] ++;
+        }
+        char[] chars1 = ransomNote.toCharArray();
+        for (char c : chars1) {
+            int n = arr[c - 'a'];
+            if (n > 0) {
+                arr[c - 'a'] --;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 5942. 找出 3 位偶数
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> set = new HashSet<>();
+        // 百位
+        for (int i = 0; i < digits.length; i++) {
+            if (digits[i] == 0) {
+                continue;
+            }
+            // 十位
+            for (int i1 = 0; i1 < digits.length; i1++) {
+                if (i1 == i) {
+                    continue;
+                }
+                // 个位
+                for (int i2 = 0; i2 < digits.length; i2++) {
+                    if (i2 == i1 || i2 == i) {
+                        continue;
+                    }
+                    if (digits[i2] % 2 != 0) {
+                        continue;
+                    }
+                    int num = digits[i] * 100 + digits[i1] * 10 + digits[i2];
+                    set.add(num);
+                }
+            }
+        }
+        Integer[] arr = set.toArray(new Integer[0]);
+        Arrays.sort(arr);
+        return Arrays.stream(arr).mapToInt(Integer::valueOf).toArray();
     }
 }
 
