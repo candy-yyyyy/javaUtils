@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] word = {2,1,3,0};
-        System.out.println(new ParkingSystem().findEvenNumbers(word));
+        int[] word = {50, -75};
+        System.out.println(new ParkingSystem().maxSubsequence(word, 2));
     }
 
     public int maxDepth(String s) {
@@ -2405,7 +2405,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length; i++) {
             if (k > 0 && nums[i] < 0) {
                 nums[i] = 0 - nums[i];
-                k --;
+                k--;
             }
         }
         Arrays.sort(nums);
@@ -2424,13 +2424,13 @@ class ParkingSystem {
         int[] arr = new int[26];
         char[] chars = magazine.toCharArray();
         for (char aChar : chars) {
-            arr[aChar - 'a'] ++;
+            arr[aChar - 'a']++;
         }
         char[] chars1 = ransomNote.toCharArray();
         for (char c : chars1) {
             int n = arr[c - 'a'];
             if (n > 0) {
-                arr[c - 'a'] --;
+                arr[c - 'a']--;
             } else {
                 return false;
             }
@@ -2467,6 +2467,45 @@ class ParkingSystem {
         Integer[] arr = set.toArray(new Integer[0]);
         Arrays.sort(arr);
         return Arrays.stream(arr).mapToInt(Integer::valueOf).toArray();
+    }
+
+    // 1816. 截断句子-简单
+    public String truncateSentence(String s, int k) {
+        String[] s1 = s.split(" ");
+        String s2 = "";
+        for (int i = 0; i < k; i++) {
+            if (i == k - 1) {
+                s2 += s1[i];
+            } else {
+                s2 += s1[i] + " ";
+            }
+        }
+        return s2;
+    }
+
+    // 5934. 找到和最大的长度为 K 的子序列
+    public int[] maxSubsequence(int[] nums, int k) {
+        int[] ori = Arrays.copyOf(nums, nums.length);
+        Arrays.sort(nums);
+        int size = nums.length;
+        List<Integer> list = new ArrayList<>();
+        for (int i = size - 1, j = k - 1; j >= 0; i--, j--) {
+            list.add(nums[i]);
+        }
+        int[] arr = new int[k];
+        int j = 0;
+        for (int num : ori) {
+            for (int i = 0; i < list.size(); i++) {
+                if (num == list.get(i)) {
+                    arr[j] = num;
+                    j++;
+                    list.remove(i);
+                    break;
+                }
+            }
+
+        }
+        return arr;
     }
 }
 
