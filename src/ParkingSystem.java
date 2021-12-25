@@ -2507,6 +2507,40 @@ class ParkingSystem {
         }
         return arr;
     }
+
+    // 5946. 句子中的最多单词数
+    public int mostWordsFound(String[] sentences) {
+        int max = 0;
+        for (String sentence : sentences) {
+            max = Math.max(sentence.split(" ").length, max);
+        }
+        return max;
+    }
+
+    // 5947. 从给定原材料中找到所有可以做出的菜
+    public List<String> findAllRecipes(String[] recipes, List<List<String>> ingredients, String[] supplies) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < recipes.length; i++) {
+            List<String> strings = ingredients.get(i);
+            Boolean getRecipesFlag = Boolean.valueOf(true);
+            for (String ingredient : strings) {
+                Boolean flag = Boolean.valueOf(false);
+                for (String supply : supplies) {
+                    if (ingredient.equals(supply)) {
+                        flag = Boolean.valueOf(true);
+                    }
+                }
+                if (!flag) {
+                    getRecipesFlag = Boolean.valueOf(false);
+                    break;
+                }
+            }
+            if (getRecipesFlag) {
+                list.add(recipes[i]);
+            }
+        }
+        return list;
+    }
 }
 
 /**
