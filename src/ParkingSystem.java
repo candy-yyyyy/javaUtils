@@ -2541,6 +2541,19 @@ class ParkingSystem {
         }
         return list;
     }
+
+    // 5963. 反转两次的数字
+    public boolean isSameAfterReversals(int num) {
+        if (num == 0) {
+            return true;
+        }
+        String str = String.valueOf(num);
+        if ("0".equals(str.substring(str.length()-1, str.length()))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 /**
