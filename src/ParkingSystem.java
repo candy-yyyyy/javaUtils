@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] word = {50, -75};
-        System.out.println(new ParkingSystem().maxSubsequence(word, 2));
+        int[] word = {5,1};
+        System.out.println(new ParkingSystem().isNStraightHand(word, 1));
     }
 
     public int maxDepth(String s) {
@@ -2543,6 +2543,81 @@ class ParkingSystem {
         return list;
     }
 
+    // 846. 一手顺子
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        Arrays.sort(hand);
+        if (hand.length % groupSize != 0) {
+            return false;
+        }
+        if (groupSize == 1) {
+            return true;
+        }
+        int n = groupSize;
+        int pre = -1;
+        List<Integer> list = Arrays.stream(hand).boxed().collect(Collectors.toList());
+        for (int i = 0; i < list.size(); i++) {
+            if (pre == -1) {
+                pre = list.get(i);
+                list.set(i, -1);
+                n--;
+                continue;
+            }
+
+            if (pre == list.get(i)) {
+                continue;
+            } else if (list.get(i) - 1 != pre) {
+                return false;
+            }
+
+            pre = list.get(i);
+
+            list.set(i, -1);
+            n--;
+            if (n == 0) {
+                n = groupSize;
+                pre = -1;
+                clearList(list);
+                i = -1;
+            }
+        }
+        if (list.size() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+
+        // 哈希
+       /* if (hand == null || hand.length == 0 || hand.length % groupSize != 0) {
+            return false;
+        }
+        // 数组进行排序预处理，并将元素及其出现次数存储在 map 中
+        Arrays.sort(hand);
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i : hand) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+        for (int h : hand) {
+            if (map.get(h) > 0) {
+                // 判断 map 中是否有足够的元素构成顺子
+                for (int j = 0; j < groupSize; j++) {
+                    if (map.getOrDefault(h + j, 0) > 0) {
+                        map.put(h + j, map.get(h + j) - 1);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;*/
+    }
+
+    public void clearList(List<Integer> list) {
+        for (int i = list.size()-1; i >=0; i--) {
+            if (list.get(i) == -1) {
+                list.remove(i);
+            }
+        }
+    }
 }
 
 /**
