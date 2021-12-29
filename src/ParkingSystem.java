@@ -2085,6 +2085,7 @@ class ParkingSystem {
         return sum;
     }
 
+    //    1995. 统计特殊四元组
     public int countQuadruplets(int[] nums) {
         int num = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -2541,6 +2542,7 @@ class ParkingSystem {
         }
         return list;
     }
+
 }
 
 /**
