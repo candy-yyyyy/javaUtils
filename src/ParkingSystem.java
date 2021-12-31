@@ -2618,6 +2618,36 @@ class ParkingSystem {
             }
         }
     }
+
+    // 507. 完美数
+    public boolean checkPerfectNumber(int num) {
+        int total = 0;
+        for (int i = 1; i < num; i++) {
+            if (num % i == 0) {
+                total += i;
+            }
+        }
+        if (total == num) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 2022. 将一维数组转变成二维数组
+    public int[][] construct2DArray1(int[] original, int m, int n) {
+        if (original.length != m * n) {
+            return new int[0][0];
+        }
+
+        int[][] arr = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = original[i*n + j];
+            }
+        }
+        return arr;
+    }
 }
 
 /**
