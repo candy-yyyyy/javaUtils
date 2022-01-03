@@ -51,8 +51,7 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] word = {5,1};
-        System.out.println(new ParkingSystem().isNStraightHand(word, 1));
+        System.out.println(new ParkingSystem().dayOfTheWeek(31, 8, 2100));
     }
 
     public int maxDepth(String s) {
@@ -2612,7 +2611,7 @@ class ParkingSystem {
     }
 
     public void clearList(List<Integer> list) {
-        for (int i = list.size()-1; i >=0; i--) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             if (list.get(i) == -1) {
                 list.remove(i);
             }
@@ -2643,10 +2642,28 @@ class ParkingSystem {
         int[][] arr = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                arr[i][j] = original[i*n + j];
+                arr[i][j] = original[i * n + j];
             }
         }
         return arr;
+    }
+
+    // 1185. 一周中的第几天 1970年12月31日 星期四（Thursday）
+    // 闰年 能被4整除且不能被100整除 或者 能被400整除
+    public String dayOfTheWeek(int day, int month, int year) {
+        String[] week = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        int totalDay = 0;
+        // 计算年相差的总天数
+        for (int i = 1971; i < year; i++) {
+            totalDay += (i % 4 == 0 && i % 100 != 0) || (i % 400 == 0) ? 366 : 365;
+        }
+        // 计算月的天数
+        int[] monthDay = {1, 31, (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
+        for (int i = 1; i < month; i++) {
+            totalDay += monthDay[i];
+        }
+        totalDay += day;
+        return week[(totalDay + 4) % 7];
     }
 }
 
