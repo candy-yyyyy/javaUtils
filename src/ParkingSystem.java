@@ -2665,6 +2665,38 @@ class ParkingSystem {
         totalDay += day;
         return week[(totalDay + 4) % 7];
     }
+
+    // 1576. 替换所有的问号
+    public String modifyString(String s) {
+        if ("?".equals(s)) {
+            return "a";
+        }
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '?') {
+                if (i == 0) {
+                    chars[i] = getCharword('1', chars[i+1]);
+                } else if (i == s.length() - 1) {
+                    chars[i] = getCharword(chars[i-1], '1');
+                } else {
+                    chars[i] = getCharword(chars[i-1], chars[i+1]);
+                }
+            }
+        }
+        return new String(chars);
+    }
+
+    private char getCharword(char pre, char next) {
+        char midChar = '0';
+        for (int i = 0; i < 26; i++) {
+            if (pre == 'a' + i || next == 'a'+ i) {
+                continue;
+            } else {
+                midChar = (char)('a' + i);
+            }
+        }
+        return midChar;
+    }
 }
 
 /**
