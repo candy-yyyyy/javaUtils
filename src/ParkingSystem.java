@@ -51,9 +51,11 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new ParkingSystem().dayOfTheWeek(31, 8, 2100));
+        String[] str = {"bb","bb"};
+        System.out.println(new ParkingSystem().longestPalindrome(str));
     }
 
+    // 1614. 括号的最大嵌套深度
     public int maxDepth(String s) {
         String[] arr = s.split("");
         int max = 0;
@@ -2675,11 +2677,11 @@ class ParkingSystem {
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] == '?') {
                 if (i == 0) {
-                    chars[i] = getCharword('1', chars[i+1]);
+                    chars[i] = getCharword('1', chars[i + 1]);
                 } else if (i == s.length() - 1) {
-                    chars[i] = getCharword(chars[i-1], '1');
+                    chars[i] = getCharword(chars[i - 1], '1');
                 } else {
-                    chars[i] = getCharword(chars[i-1], chars[i+1]);
+                    chars[i] = getCharword(chars[i - 1], chars[i + 1]);
                 }
             }
         }
@@ -2689,13 +2691,102 @@ class ParkingSystem {
     private char getCharword(char pre, char next) {
         char midChar = '0';
         for (int i = 0; i < 26; i++) {
-            if (pre == 'a' + i || next == 'a'+ i) {
+            if (pre == 'a' + i || next == 'a' + i) {
                 continue;
             } else {
-                midChar = (char)('a' + i);
+                midChar = (char) ('a' + i);
             }
         }
         return midChar;
+    }
+
+    // 1614. 括号的最大嵌套深度
+    public int maxDepth1(String s) {
+        char[] chars = s.toCharArray();
+        int max = 0;
+        int left = 0;
+        for (char aChar : chars) {
+            if (aChar == '(') {
+                left++;
+            }
+            if (aChar == ')') {
+                left--;
+            }
+            max = Math.max(max, left);
+        }
+        return max;
+    }
+
+    // 5960. 将标题首字母大写
+    public String capitalizeTitle(String title) {
+        String[] s = title.split(" ");
+        String str = "";
+        for (String s1 : s) {
+            if (s1.length() >= 3) {
+                str += s1.substring(0, 1).toUpperCase() + s1.substring(1, s1.length()).toLowerCase() + " ";
+            } else {
+                str += s1.toLowerCase() + " ";
+            }
+        }
+        return str.trim();
+    }
+
+    // 5961. 链表最大孪生和
+    public int pairSum(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        int max = 0;
+        for (int i = 0; i < list.size() / 2; i++) {
+            max = Math.max((list.get(i) + list.get(list.size() - 1 - i)), max);
+        }
+        return max;
+    }
+
+    // 5962. 连接两字母单词得到的最长回文串 （超时）
+    public int longestPalindrome(String[] words) {
+        int max = 0;
+        boolean sameFlag = true;
+        for (int i = 0; i < words.length; i++) {
+            if ("".equals(words[i])) {
+                continue;
+            }
+            for (int j = i; j < words.length; j++) {
+                if (i == j) {
+                    continue;
+                }
+                if (words[i].equals(getPalindrome(words[j]))) {
+                    max += 4;
+                    words[i] = "";
+                    words[j] = "";
+                    break;
+                }
+            }
+
+            if (!"".equals(words[i]) && sameWord(words[i]) && sameFlag) {
+                max += 2;
+                sameFlag = false;
+            }
+        }
+        return max;
+    }
+
+    // 转换为回文字符串
+    private String getPalindrome(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+
+    // 判断是否是重复的字符
+    private Boolean sameWord(String str) {
+        char aChar = str.charAt(0);
+        for (int i=1;i<str.length();i++) {
+            if (aChar != str.charAt(i)){
+                return false;
+            }
+        }
+        return true;
     }
 }
 
