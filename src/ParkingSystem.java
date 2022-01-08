@@ -2780,13 +2780,7 @@ class ParkingSystem {
 
     // 判断是否是重复的字符
     private Boolean sameWord(String str) {
-        char aChar = str.charAt(0);
-        for (int i=1;i<str.length();i++) {
-            if (aChar != str.charAt(i)){
-                return false;
-            }
-        }
-        return true;
+        return str.charAt(0) == str.charAt(1) ? true : false;
     }
 }
 
