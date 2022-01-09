@@ -2806,6 +2806,30 @@ class ParkingSystem {
         }
         return aa;
     }
+
+    // 5976. 检查是否每一行每一列都包含全部整数
+    public boolean checkValid(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            Map<Integer, Integer> mapX = new HashMap<>();
+            Map<Integer, Integer> mapY = new HashMap<>();
+            for (int j = 0; j < n; j++) {
+                if (mapX.containsKey(matrix[i][j]) || matrix[i][j] > n) {
+                    return false;
+                } else {
+                    mapX.put(matrix[i][j], 0);
+                }
+                if (mapY.containsKey(matrix[j][i]) || matrix[j][i] > n) {
+                    return false;
+                } else {
+                    mapY.put(matrix[j][i], 0);
+                }
+            }
+        }
+        return true;
+    }
+
+
 }
 
 /**
