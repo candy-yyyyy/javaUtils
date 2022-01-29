@@ -2870,6 +2870,25 @@ class ParkingSystem {
         return 1;
     }
 
+    // 884. 两句话中的不常见单词
+    public String[] uncommonFromSentences(String s1, String s2) {
+        String[] s1Arr = s1.split(" ");
+        String[] s2Arr = s2.split(" ");
+        Map<String, Integer> map = new HashMap<>();
+        for (String s : s1Arr) {
+            map.put(s, map.getOrDefault(s, 0) + 1);
+        }
+        for (String s : s2Arr) {
+            map.put(s, map.getOrDefault(s, 0) + 1);
+        }
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<String, Integer> stringIntegerEntry : map.entrySet()) {
+            if (stringIntegerEntry.getValue() == 1) {
+                list.add(stringIntegerEntry.getKey());
+            }
+        }
+        return list.toArray(new String[0]);
+    }
 }
 
 /**
