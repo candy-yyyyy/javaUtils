@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr = {1, 2, 3, 1, 2, 3};
-        System.out.println(new ParkingSystem().containsNearbyDuplicate(arr, 2));
+        int[] arr = {1,1};
+        System.out.println(new ParkingSystem().maxScoreIndices(arr));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -2843,18 +2843,19 @@ class ParkingSystem {
         }
         return false;
     }
+
     // 5971. 打折购买糖果的最小开销
     public int minimumCost(int[] cost) {
         Arrays.sort(cost);
         int max = 0;
         int index = 0;
-        for (int i = cost.length-1; i >= 0; i--) {
+        for (int i = cost.length - 1; i >= 0; i--) {
             if (index == 2) {
                 index = 0;
                 continue;
             }
             max += cost[i];
-            index ++;
+            index++;
         }
         return max;
     }
@@ -2863,7 +2864,7 @@ class ParkingSystem {
     public int removePalindromeSub(String s) {
         char[] chars = s.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != chars[s.length() - 1- i]) {
+            if (chars[i] != chars[s.length() - 1 - i]) {
                 return 2;
             }
         }
@@ -2888,6 +2889,106 @@ class ParkingSystem {
             }
         }
         return list.toArray(new String[0]);
+    }
+
+    // 5993. 将找到的值乘以 2
+    public int findFinalValue(int[] nums, int original) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, 1);
+        }
+        while (true) {
+            if (map.containsKey(original)) {
+                original = original * 2;
+            } else {
+                break;
+            }
+        }
+        return original;
+    }
+
+    // 5981. 分组得分最高的所有下标
+    public List<Integer> maxScoreIndices(int[] nums) {
+        int max = 0;
+        int left = 0;
+        int right = 0;
+        for (int num : nums) {
+            right += num;
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int n = 0;
+            if (i == 0) {
+                n = right;
+                list.add(0);
+                max = n;
+            }
+            if (nums[i] == 0) {
+                left ++;
+            } else if (nums[i] == 1) {
+                right --;
+            }
+            n = left + right;
+            if (n > max) {
+                list = new ArrayList<>();
+                list.add(i+1);
+                max = n;
+            } else if (n == max) {
+                list.add(i+1);
+                max = n;
+            }
+        }
+        return list;
+    }
+
+    // 1725. 可以形成最大正方形的矩形数目
+    public int countGoodRectangles(int[][] rectangles) {
+        int maxSide = 0;
+        int k = 1;
+        for (int i = 0; i < rectangles.length; i++) {
+            int l = rectangles[i][0];
+            int w = rectangles[i][1];
+            int lw = Math.min(l,w);
+            if (lw > maxSide) {
+                maxSide = lw;
+                k = 1;
+            } else if (lw == maxSide) {
+                k++;
+            }
+        }
+        return k;
+    }
+
+    // 5984. 拆分数位后四位数字的最小和
+    public int minimumSum(int num) {
+        int result = 0;
+        int[] arr = new int[4];
+        char[] chars = String.valueOf(num).toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            arr[i] = Integer.parseInt(String.valueOf(chars[i]));
+        }
+        Arrays.sort(arr);
+        result = (arr[0] * 10 + arr[3]) + (arr[1] * 10 + arr[2]);
+        return result;
+    }
+
+    // 5985. 根据给定数字划分数组
+    public int[] pivotArray(int[] nums, int pivot) {
+        List<Integer> left = new ArrayList<>();
+        List<Integer> right = new ArrayList<>();
+        List<Integer> mid = new ArrayList<>();
+        for (int num : nums) {
+            if (num < pivot) {
+                left.add(num);
+            } else if (num == pivot) {
+                mid.add(num);
+            } else if (num > pivot) {
+                right.add(num);
+            }
+        }
+        left.addAll(mid);
+        left.addAll(right);
+        return left.stream().mapToInt(Integer::valueOf).toArray();
     }
 }
 
