@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr = {1,1};
-        System.out.println(new ParkingSystem().maxScoreIndices(arr));
+        int[] arr = {2,2,2,2,3};
+        System.out.println(new ParkingSystem().mostFrequent(arr, 2));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -2924,17 +2924,17 @@ class ParkingSystem {
                 max = n;
             }
             if (nums[i] == 0) {
-                left ++;
+                left++;
             } else if (nums[i] == 1) {
-                right --;
+                right--;
             }
             n = left + right;
             if (n > max) {
                 list = new ArrayList<>();
-                list.add(i+1);
+                list.add(i + 1);
                 max = n;
             } else if (n == max) {
-                list.add(i+1);
+                list.add(i + 1);
                 max = n;
             }
         }
@@ -2948,7 +2948,7 @@ class ParkingSystem {
         for (int i = 0; i < rectangles.length; i++) {
             int l = rectangles[i][0];
             int w = rectangles[i][1];
-            int lw = Math.min(l,w);
+            int lw = Math.min(l, w);
             if (lw > maxSide) {
                 maxSide = lw;
                 k = 1;
@@ -3013,9 +3013,9 @@ class ParkingSystem {
         });
         for (int i = 0; i < nums.length; i++) {
             if (i % 2 == 0) {
-                nums[i] = list1.get(i/2);
+                nums[i] = list1.get(i / 2);
             } else {
-                nums[i] = list2.get(i/2);
+                nums[i] = list2.get(i / 2);
             }
         }
         return nums;
@@ -3026,10 +3026,31 @@ class ParkingSystem {
         int count = 0;
         for (String word : words) {
             if (word.indexOf(pref) == 0) {
-                count ++;
+                count++;
             }
         }
         return count;
+    }
+
+    // 6024. 数组中紧跟 key 之后出现最频繁的数字
+    public int mostFrequent(int[] nums, int key) {
+        int n = 0;
+        int m = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == key) {
+                if (i + 1 < nums.length) {
+                    map.put(nums[i+1], (Integer) map.getOrDefault(nums[i+1], 0) + 1);
+                }
+            }
+        }
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() > m) {
+                n = integerIntegerEntry.getKey();
+                m = integerIntegerEntry.getValue();
+            }
+        }
+        return n;
     }
 }
 
