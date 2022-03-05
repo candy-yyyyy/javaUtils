@@ -2990,6 +2990,47 @@ class ParkingSystem {
         left.addAll(right);
         return left.stream().mapToInt(Integer::valueOf).toArray();
     }
+
+    // 6000. 对奇偶下标分别排序
+    public int[] sortEvenOdd(int[] nums) {
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (i % 2 == 0) {
+                list1.add(nums[i]);
+            } else {
+                list2.add(nums[i]);
+            }
+        }
+        // 偶数递增
+        Collections.sort(list1);
+        // 奇数递减
+        Collections.sort(list2, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        for (int i = 0; i < nums.length; i++) {
+            if (i % 2 == 0) {
+                nums[i] = list1.get(i/2);
+            } else {
+                nums[i] = list2.get(i/2);
+            }
+        }
+        return nums;
+    }
+
+    // 6008. 统计包含给定前缀的字符串
+    public int prefixCount(String[] words, String pref) {
+        int count = 0;
+        for (String word : words) {
+            if (word.indexOf(pref) == 0) {
+                count ++;
+            }
+        }
+        return count;
+    }
 }
 
 /**
