@@ -51,7 +51,7 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr = {2,2,2,2,3};
+        int[] arr = {2, 2, 2, 2, 3};
         System.out.println(new ParkingSystem().mostFrequent(arr, 2));
     }
 
@@ -3040,7 +3040,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == key) {
                 if (i + 1 < nums.length) {
-                    map.put(nums[i+1], (Integer) map.getOrDefault(nums[i+1], 0) + 1);
+                    map.put(nums[i + 1], (Integer) map.getOrDefault(nums[i + 1], 0) + 1);
                 }
             }
         }
@@ -3051,6 +3051,25 @@ class ParkingSystem {
             }
         }
         return n;
+    }
+
+    // 5299. 找到一个数字的 K 美丽值
+    public int divisorSubstrings(int num, int k) {
+        String numStr = String.valueOf(num);
+        int count = 0;
+        for (int i = 0; i < numStr.length(); i++) {
+            if (i + k > numStr.length()) {
+                break;
+            }
+            String sonStr = numStr.substring(i, i + k);
+            if (Integer.valueOf(sonStr) == 0) {
+                continue;
+            }
+            if (num % Integer.valueOf(sonStr) == 0) {
+                count++;
+            }
+        }
+        return count;
     }
 }
 
