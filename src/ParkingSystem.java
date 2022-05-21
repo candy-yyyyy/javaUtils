@@ -51,8 +51,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr = {2, 2, 2, 2, 3};
-        System.out.println(new ParkingSystem().mostFrequent(arr, 2));
+        String[] words = {"hello", "leetcode"};
+        String order = "hlabcdefgijkmnopqrstuvwxyz";
+        System.out.println(new ParkingSystem().isAlienSorted(words, order));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3100,6 +3101,64 @@ class ParkingSystem {
             }
         }
         return true;
+    }
+
+    // 953. 验证外星语词典
+    public boolean isAlienSorted(String[] words, String order) {
+        if (words.length == 1) {
+            return true;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < order.length(); i++) {
+            map.put(order.charAt(i), i);
+        }
+
+        for (int i = 1; i < words.length; i++) {
+            String word1 = words[i - 1];
+            String word2 = words[i];
+
+            boolean skipFlag = false;
+
+            int length = Math.max(word1.length(), word2.length());
+            for (int j = 0; j < length; j++) {
+                if (map.get(word2.charAt(j)) < map.get(word1.charAt(j))) {
+                    return false;
+                } else  if (map.get(word2.charAt(j)) == map.get(word1.charAt(j))) {
+                    continue;
+                } else {
+                    skipFlag = true;
+                    break;
+                }
+            }
+
+            if (skipFlag) {
+                continue;
+            }
+            if (word1.length() > word2.length()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 961. 在长度 2N 的数组中找出重复 N 次的元素
+    public int repeatedNTimes(int[] nums) {
+        int n = nums.length / 2;
+        int m = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (map.containsKey(num)) {
+                map.put(num, map.get(num) + 1);
+            } else {
+                map.put(num, 1);
+            }
+        }
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() == n) {
+                m = integerIntegerEntry.getKey();
+            }
+        }
+        return m;
     }
 }
 
