@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr = {2,2,2,2,3};
-        System.out.println(new ParkingSystem().mostFrequent(arr, 2));
+        String str = "11111222223";
+        System.out.println(new ParkingSystem().digitSum(str,3));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3040,7 +3040,7 @@ class ParkingSystem {
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == key) {
                 if (i + 1 < nums.length) {
-                    map.put(nums[i+1], (Integer) map.getOrDefault(nums[i+1], 0) + 1);
+                    map.put(nums[i + 1], (Integer) map.getOrDefault(nums[i + 1], 0) + 1);
                 }
             }
         }
@@ -3051,6 +3051,127 @@ class ParkingSystem {
             }
         }
         return n;
+    }
+
+    // 6016. Excel 表中某个范围内的单元格
+    public List<String> cellsInRange(String s) {
+        String first = s.split(":")[0];
+        String sencond = s.split(":")[1];
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i <= sencond.charAt(0) - first.charAt(0); i++) {
+            for (int j = first.charAt(1) - '0'; j <= sencond.charAt(1) - '0'; j++) {
+                String a = Character.toString((char) (first.charAt(0) + i));
+                String b = String.valueOf(j);
+                list.add(a + b);
+            }
+        }
+        return list;
+    }
+
+    // 6020. 将数组划分成相等数对
+    public boolean divideArray(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i = i + 2) {
+            if (nums[i] != nums[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 6027. 统计数组中峰和谷的数量
+    public int countHillValley(int[] nums) {
+        int count = 0;
+        int prev = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i == 0 || i == nums.length - 1) {
+                continue;
+            }
+            int mid = nums[i];
+            if (mid == prev) {
+                continue;
+            }
+            // 获取左侧最近不相等的值
+            int left = mid;
+            for (int j = i; j >= 0; j--) {
+                if (nums[j] != nums[i]) {
+                    left = nums[j];
+                    break;
+                }
+            }
+            // 获取右侧最近不相等的值
+            int right = mid;
+            for (int k = i; k < nums.length; k++) {
+                if (nums[k] != nums[i]) {
+                    right = nums[k];
+                    break;
+                }
+            }
+            if ((mid > left && mid > right) || (mid < left && mid < right)) {
+                count++;
+            }
+            prev = mid;
+        }
+        return count;
+    }
+
+    // 6060. 找到最接近 0 的数字
+    public int findClosestNumber(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        int num = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (Math.abs(nums[i]) < min) {
+                min = Math.abs(nums[i]);
+                num = nums[i];
+            } else if (Math.abs(nums[i]) == min) {
+                num = Math.max(nums[i], num);
+            }
+        }
+        return num;
+    }
+
+    // 6070. 计算字符串的数字和
+    public String digitSum(String s, int k) {
+        while (s.length() > k) {
+            String newS = "";
+            for (int i = 0; i < s.length();) {
+                String str = "";
+                if (i + k > s.length()) {
+                    str = s.substring(i, s.length());
+                } else {
+                    str = s.substring(i, i + k);
+                }
+
+                int sum = 0;
+                for (int j = 0; j < str.length(); j++) {
+                    Integer integer = Integer.valueOf(String.valueOf(str.charAt(j)));
+                    sum += integer;
+                }
+                newS += String.valueOf(sum);
+                i = i + k;
+            }
+            s = newS;
+        }
+        return s;
+    }
+
+    // 929. 独特的电子邮件地址
+    public int numUniqueEmails(String[] emails) {
+        Set<String> set = new HashSet<>();
+        for (String email : emails) {
+            String prevStr = email.split("@")[0];
+            String lst = email.split("@")[1];
+            // 处理句点
+            prevStr = prevStr.replace(".", "");
+            // 处理加号
+            if (prevStr.indexOf("+") != -1) {
+                prevStr = prevStr.substring(0, prevStr.indexOf("+"));
+            }
+            set.add(prevStr + "@" + lst);
+        }
+        return set.size();
+
     }
 }
 
