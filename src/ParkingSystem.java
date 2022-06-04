@@ -51,8 +51,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String str = "11111222223";
-        System.out.println(new ParkingSystem().digitSum(str,3));
+        String[] words = {"hello", "leetcode"};
+        String order = "hlabcdefgijkmnopqrstuvwxyz";
+        System.out.println(new ParkingSystem().isAlienSorted(words, order));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3053,125 +3054,111 @@ class ParkingSystem {
         return n;
     }
 
-    // 6016. Excel 表中某个范围内的单元格
-    public List<String> cellsInRange(String s) {
-        String first = s.split(":")[0];
-        String sencond = s.split(":")[1];
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i <= sencond.charAt(0) - first.charAt(0); i++) {
-            for (int j = first.charAt(1) - '0'; j <= sencond.charAt(1) - '0'; j++) {
-                String a = Character.toString((char) (first.charAt(0) + i));
-                String b = String.valueOf(j);
-                list.add(a + b);
+    // 5299. 找到一个数字的 K 美丽值
+    public int divisorSubstrings(int num, int k) {
+        String numStr = String.valueOf(num);
+        int count = 0;
+        for (int i = 0; i < numStr.length(); i++) {
+            if (i + k > numStr.length()) {
+                break;
+            }
+            String sonStr = numStr.substring(i, i + k);
+            if (Integer.valueOf(sonStr) == 0) {
+                continue;
+            }
+            if (num % Integer.valueOf(sonStr) == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // 5234. 移除字母异位词后的结果数组
+    public List<String> removeAnagrams(String[] words) {
+        List<String> list1 = Arrays.asList(words);
+        List<String> list = new ArrayList<>(list1);
+        for (int i = 1; i < list.size(); i++) {
+            if (isAnagrams(list.get(i), list.get(i - 1))) {
+                list.remove(i);
+                i--;
             }
         }
         return list;
     }
 
-    // 6020. 将数组划分成相等数对
-    public boolean divideArray(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length; i = i + 2) {
-            if (nums[i] != nums[i + 1]) {
+    public Boolean isAnagrams(String str1, String str2) {
+        if (str1.length() != str2.length()) {
+            return false;
+        }
+        int[] arr = new int[26];
+        for (int i = 0; i < str1.length(); i++) {
+            arr[str1.charAt(i) - 'a']++;
+            arr[str2.charAt(i) - 'a']--;
+        }
+        for (int i : arr) {
+            if (i != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    // 6027. 统计数组中峰和谷的数量
-    public int countHillValley(int[] nums) {
-        int count = 0;
-        int prev = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (i == 0 || i == nums.length - 1) {
-                continue;
-            }
-            int mid = nums[i];
-            if (mid == prev) {
-                continue;
-            }
-            // 获取左侧最近不相等的值
-            int left = mid;
-            for (int j = i; j >= 0; j--) {
-                if (nums[j] != nums[i]) {
-                    left = nums[j];
-                    break;
-                }
-            }
-            // 获取右侧最近不相等的值
-            int right = mid;
-            for (int k = i; k < nums.length; k++) {
-                if (nums[k] != nums[i]) {
-                    right = nums[k];
-                    break;
-                }
-            }
-            if ((mid > left && mid > right) || (mid < left && mid < right)) {
-                count++;
-            }
-            prev = mid;
+    // 953. 验证外星语词典
+    public boolean isAlienSorted(String[] words, String order) {
+        if (words.length == 1) {
+            return true;
         }
-        return count;
-    }
-
-    // 6060. 找到最接近 0 的数字
-    public int findClosestNumber(int[] nums) {
-        int min = Integer.MAX_VALUE;
-        int num = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (Math.abs(nums[i]) < min) {
-                min = Math.abs(nums[i]);
-                num = nums[i];
-            } else if (Math.abs(nums[i]) == min) {
-                num = Math.max(nums[i], num);
-            }
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < order.length(); i++) {
+            map.put(order.charAt(i), i);
         }
-        return num;
-    }
 
-    // 6070. 计算字符串的数字和
-    public String digitSum(String s, int k) {
-        while (s.length() > k) {
-            String newS = "";
-            for (int i = 0; i < s.length();) {
-                String str = "";
-                if (i + k > s.length()) {
-                    str = s.substring(i, s.length());
+        for (int i = 1; i < words.length; i++) {
+            String word1 = words[i - 1];
+            String word2 = words[i];
+
+            boolean skipFlag = false;
+
+            int length = Math.max(word1.length(), word2.length());
+            for (int j = 0; j < length; j++) {
+                if (map.get(word2.charAt(j)) < map.get(word1.charAt(j))) {
+                    return false;
+                } else  if (map.get(word2.charAt(j)) == map.get(word1.charAt(j))) {
+                    continue;
                 } else {
-                    str = s.substring(i, i + k);
+                    skipFlag = true;
+                    break;
                 }
-
-                int sum = 0;
-                for (int j = 0; j < str.length(); j++) {
-                    Integer integer = Integer.valueOf(String.valueOf(str.charAt(j)));
-                    sum += integer;
-                }
-                newS += String.valueOf(sum);
-                i = i + k;
             }
-            s = newS;
+
+            if (skipFlag) {
+                continue;
+            }
+            if (word1.length() > word2.length()) {
+                return false;
+            }
         }
-        return s;
+        return true;
     }
 
-    // 929. 独特的电子邮件地址
-    public int numUniqueEmails(String[] emails) {
-        Set<String> set = new HashSet<>();
-        for (String email : emails) {
-            String prevStr = email.split("@")[0];
-            String lst = email.split("@")[1];
-            // 处理句点
-            prevStr = prevStr.replace(".", "");
-            // 处理加号
-            if (prevStr.indexOf("+") != -1) {
-                prevStr = prevStr.substring(0, prevStr.indexOf("+"));
+    // 961. 在长度 2N 的数组中找出重复 N 次的元素
+    public int repeatedNTimes(int[] nums) {
+        int n = nums.length / 2;
+        int m = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (map.containsKey(num)) {
+                map.put(num, map.get(num) + 1);
+            } else {
+                map.put(num, 1);
             }
-            set.add(prevStr + "@" + lst);
         }
-        return set.size();
-
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() == n) {
+                m = integerIntegerEntry.getKey();
+            }
+        }
+        return m;
     }
 }
 
