@@ -51,9 +51,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String[] words = {"hello", "leetcode"};
-        String order = "hlabcdefgijkmnopqrstuvwxyz";
-        System.out.println(new ParkingSystem().isAlienSorted(words, order));
+        int[] nums = {1,2,4,6};
+        int[][] operations = {{1,3},{4,7},{6,1}};
+        System.out.println(new ParkingSystem().arrayChange(nums, operations));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3123,7 +3123,7 @@ class ParkingSystem {
             for (int j = 0; j < length; j++) {
                 if (map.get(word2.charAt(j)) < map.get(word1.charAt(j))) {
                     return false;
-                } else  if (map.get(word2.charAt(j)) == map.get(word1.charAt(j))) {
+                } else if (map.get(word2.charAt(j)) == map.get(word1.charAt(j))) {
                     continue;
                 } else {
                     skipFlag = true;
@@ -3145,7 +3145,7 @@ class ParkingSystem {
     public int repeatedNTimes(int[] nums) {
         int n = nums.length / 2;
         int m = 0;
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
             if (map.containsKey(num)) {
                 map.put(num, map.get(num) + 1);
@@ -3159,6 +3159,63 @@ class ParkingSystem {
             }
         }
         return m;
+    }
+
+    // 6090. 极大极小游戏
+    public int minMaxGame(int[] nums) {
+        while (nums.length > 1) {
+            int[] newNums = new int[nums.length / 2];
+            for (int i = 0; i < newNums.length; i++) {
+                if (i % 2 == 0) {
+                    // 偶数
+                    newNums[i] = Math.min(nums[2 * i], nums[2 * i + 1]);
+                } else {
+                    // 奇数
+                    newNums[i] = Math.max(nums[2 * i], nums[2 * i + 1]);
+                }
+            }
+            nums = newNums;
+        }
+        return nums[0];
+    }
+
+    // 6091. 划分数组使最大差为 K
+    public int partitionArray(int[] nums, int k) {
+        Arrays.sort(nums);
+        int count = 0;
+        int length = nums.length;
+        label1:
+        for (int i = 0; i < length; ) {
+            int l = i;
+            boolean flag = false;
+            for (int j = l++; j < length; j++) {
+                if (nums[j] - nums[i] > k) {
+                    i = j;
+                    flag = true;
+                    break;
+                }
+            }
+            count++;
+            if (!flag) {
+                break label1;
+            }
+        }
+        return count;
+    }
+
+    // 6092. 替换数组中的元素
+    public int[] arrayChange(int[] nums, int[][] operations) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        for (int[] op : operations) {
+            int idx = map.get(op[0]);
+            nums[idx] = op[1];
+            map.remove(op[0]);
+            map.put(op[1], idx);
+        }
+        return nums;
     }
 }
 
