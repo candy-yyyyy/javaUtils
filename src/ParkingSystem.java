@@ -51,9 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] nums = {1,2,4,6};
-        int[][] operations = {{1,3},{4,7},{6,1}};
-        System.out.println(new ParkingSystem().arrayChange(nums, operations));
+        int[][] operations = {{0,1},{1,1},{2,2}};
+        System.out.println(new ParkingSystem().isBoomerang(operations));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3216,6 +3215,33 @@ class ParkingSystem {
             map.put(op[1], idx);
         }
         return nums;
+    }
+
+    // 1037. 有效的回旋镖
+    public boolean isBoomerang(int[][] points) {
+        // 判断是否有2点在同一个点上
+
+        if (Arrays.toString(points[0]).equals(Arrays.toString(points[1])) || Arrays.toString(points[0]).equals(Arrays.toString(points[2])) || Arrays.toString(points[1]).equals(Arrays.toString(points[2]))) {
+            return false;
+        }
+        // 判断横坐标是否都相同
+        if (points[0][0] == points[1][0] && points[0][0] == points[2][0]) {
+            return false;
+        }
+        // 判断纵坐标是否相同
+        if (points[0][1] == points[1][1] && points[0][1] == points[2][1]) {
+            return false;
+        }
+        // 判断斜率
+        if (points[0][0] - points[1][0] != 0 && points[0][0] - points[2][0] != 0) {
+            System.out.println((points[0][1] - points[1][1])/(points[0][0] - points[1][0]));
+            System.out.println((points[0][1] - points[2][1])/(points[0][0] - points[2][0]));
+            if ((float)(points[0][1] - points[1][1])/(float)(points[0][0] - points[1][0]) == (float)(points[0][1] - points[2][1])/(float)(points[0][0] - points[2][0])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
