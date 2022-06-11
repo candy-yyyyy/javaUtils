@@ -51,8 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[][] operations = {{0,1},{1,1},{2,2}};
-        System.out.println(new ParkingSystem().isBoomerang(operations));
+        String test = "a1A!A!A!";
+        System.out.println(new ParkingSystem().strongPasswordCheckerII(test));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3204,7 +3204,7 @@ class ParkingSystem {
 
     // 6092. 替换数组中的元素
     public int[] arrayChange(int[] nums, int[][] operations) {
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             map.put(nums[i], i);
         }
@@ -3234,14 +3234,53 @@ class ParkingSystem {
         }
         // 判断斜率
         if (points[0][0] - points[1][0] != 0 && points[0][0] - points[2][0] != 0) {
-            System.out.println((points[0][1] - points[1][1])/(points[0][0] - points[1][0]));
-            System.out.println((points[0][1] - points[2][1])/(points[0][0] - points[2][0]));
-            if ((float)(points[0][1] - points[1][1])/(float)(points[0][0] - points[1][0]) == (float)(points[0][1] - points[2][1])/(float)(points[0][0] - points[2][0])) {
+            System.out.println((points[0][1] - points[1][1]) / (points[0][0] - points[1][0]));
+            System.out.println((points[0][1] - points[2][1]) / (points[0][0] - points[2][0]));
+            if ((float) (points[0][1] - points[1][1]) / (float) (points[0][0] - points[1][0]) == (float) (points[0][1] - points[2][1]) / (float) (points[0][0] - points[2][0])) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    // 6095. 强密码检验器 II
+    public boolean strongPasswordCheckerII(String password) {
+        String specWord = "!@#$%^&*()-+";
+        // 判断8位字符
+        if (password.length() < 8) {
+            return false;
+        }
+        Boolean lowerCaseFlag = false;
+        Boolean upperCaseFlag = false;
+        Boolean numberFlag = false;
+        Boolean specWordFlag = false;
+        char[] chars = password.toCharArray();
+        char lastWord = ' ';
+        for (char aChar : chars) {
+            if (aChar == lastWord) {
+                return false;
+            }
+            if (Character.isLowerCase(aChar)) {
+                 lowerCaseFlag = true;
+            }
+            if (Character.isUpperCase(aChar)) {
+                upperCaseFlag = true;
+            }
+            if (Character.isDigit(aChar)) {
+                numberFlag = true;
+            }
+            if (specWord.contains(String.valueOf(aChar))) {
+                specWordFlag = true;
+            }
+            lastWord = aChar;
+        }
+
+        if (lowerCaseFlag && upperCaseFlag && numberFlag && specWordFlag) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
