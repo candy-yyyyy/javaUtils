@@ -51,8 +51,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String test = "a1A!A!A!";
-        System.out.println(new ParkingSystem().strongPasswordCheckerII(test));
+        int[] arr1 = {5, 1, 3};
+        int[] arr2 = {1, 2, 3, 4, 5};
+        System.out.println(new ParkingSystem().successfulPairs(arr1, arr2, 7));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3262,7 +3263,7 @@ class ParkingSystem {
                 return false;
             }
             if (Character.isLowerCase(aChar)) {
-                 lowerCaseFlag = true;
+                lowerCaseFlag = true;
             }
             if (Character.isUpperCase(aChar)) {
                 upperCaseFlag = true;
@@ -3282,6 +3283,77 @@ class ParkingSystem {
             return false;
         }
     }
+
+    // 6096. 咒语和药水的成功对数 ps：计算超时
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        int[] result = new int[spells.length];
+        Arrays.sort(potions);
+        for (int i = 0; i < spells.length; i++) {
+            int x = 0;
+            // 优化循环效率
+            if (spells[i] >= success) {
+                x = potions.length;
+                result[i] = x;
+                continue;
+            }
+
+            /*for (int j = 0; j < potions.length; j++) {
+                if ((long) spells[i] * potions[j] >= success){
+                    x = potions.length - j;
+                    break;
+                }
+            }*/
+
+            Boolean loopFlag = true;
+            int m = 0;
+            while (loopFlag && m < potions.length) {
+                if ((long) spells[i] * potions[m] >= success) {
+                    loopFlag = false;
+                    x = potions.length - m;
+                }
+                m++;
+            }
+
+
+            result[i] = x;
+        }
+        return result;
+    }
+
+    // 5259. 计算应缴税款总额
+    public double calculateTax(int[][] brackets, int income) {
+        double r = 0;
+        int lastBracket = 0;
+        for (int[] bracket : brackets) {
+            int a = bracket[0];
+            int b = bracket[1];
+            if (income < a) {
+                r += (double) (income - lastBracket) * b / 100;
+                break;
+            } else {
+                r += (double) (a - lastBracket) * b / 100;
+            }
+            lastBracket = bracket[0];
+        }
+        return r;
+    }
+
+    // 5270. 网格中的最小路径代价
+  /*  public int minPathCost(int[][] grid, int[][] moveCost) {
+        int rs = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int ii = 0; ii < grid[i].length; i++) {
+                for (int j = i; j < grid.length; j++) {
+                    for (int jj = 0; jj < grid[j].length; j++) {
+                        int a = grid[i][ii] + grid[j][jj];
+                    }
+                }
+            }
+        }
+
+        return rs;
+    }*/
 }
 
 /**
