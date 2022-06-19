@@ -3354,6 +3354,43 @@ class ParkingSystem {
 
         return rs;
     }*/
+
+    // 5242. 兼具大小写的最好英文字母
+    public String greatestLetter(String s) {
+        String res = "";
+        int[] word = new int[52];
+        char[] chars = s.toCharArray();
+        for (char aChar : chars) {
+            if (Character.isUpperCase(aChar)){
+                // 如果字母是大写
+                if (word[aChar - 'A'] != 0){
+                    // 存在小写的字符
+                    if ("".equals(res)) {
+                        res = String.valueOf(aChar);
+                    } else {
+                        if (res.charAt(0) < aChar) {
+                            res = String.valueOf(aChar);
+                        }
+                    }
+                }
+                word[26 + aChar - 'A'] ++;
+            } else if (Character.isLowerCase(aChar)) {
+                // 如果字母是小写
+                if (word[aChar - 'a' + 26] != 0) {
+                    // 存在大写的字母
+                    if ("".equals(res)) {
+                        res = String.valueOf(aChar - 32);
+                    } else {
+                        if (res.charAt(0) < aChar - 32) {
+                            res = String.valueOf(aChar - 32);
+                        }
+                    }
+                }
+                word[aChar - 'a'] ++;
+            }
+        }
+        return res;
+    }
 }
 
 /**
