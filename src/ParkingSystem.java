@@ -51,9 +51,8 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] arr1 = {5, 1, 3};
-        int[] arr2 = {1, 2, 3, 4, 5};
-        System.out.println(new ParkingSystem().successfulPairs(arr1, arr2, 7));
+        String str = "l|*e*et|c**o|*de|";
+        System.out.println(new ParkingSystem().countAsterisks(str));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3390,6 +3389,25 @@ class ParkingSystem {
             }
         }
         return res;
+    }
+
+    // 6104. 统计星号
+    public int countAsterisks(String s) {
+        if (!s.contains("*")) {
+            return 0;
+        }
+        int cnt = 0;
+        String[] split = s.split("\\|");
+        for (int i = 0; i < split.length; i++) {
+            if (i % 2 == 0) {
+                for (char c : split[i].toCharArray()) {
+                    if ( c == '*') {
+                        cnt ++;
+                    }
+                }
+            }
+        }
+        return cnt;
     }
 }
 
