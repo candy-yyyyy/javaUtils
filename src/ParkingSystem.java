@@ -51,8 +51,9 @@ class ParkingSystem {
     }
 
     public static void main(String[] args) throws Exception {
-        String str = "l|*e*et|c**o|*de|";
-        System.out.println(new ParkingSystem().countAsterisks(str));
+        String str = "the quick brown fox jumps over the lazy dog";
+        String str1 = "vkbs bs t suepuv";
+        System.out.println(new ParkingSystem().decodeMessage(str, str1));
     }
 
     // 1614. 括号的最大嵌套深度
@@ -3408,6 +3409,29 @@ class ParkingSystem {
             }
         }
         return cnt;
+    }
+
+    // 6108. 解密消息
+    public String decodeMessage(String key, String message) {
+        key = key.replace(" ", "");
+        char[] chars = key.toCharArray();
+        Map<Character,Character> map = new HashMap<>();
+        int index = 0;
+        for (char aChar : chars) {
+            if (!map.containsKey(aChar)) {
+                map.put(aChar, (char)('a' + index));
+                index ++;
+            }
+        }
+
+        char[] messageArr = message.toCharArray();
+        for (int i = 0; i < messageArr.length; i++) {
+            if (" ".equals(String.valueOf(messageArr[i]))) {
+                continue;
+            }
+            messageArr[i] = map.get(messageArr[i]);
+        }
+        return new String(messageArr);
     }
 }
 
