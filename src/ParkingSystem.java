@@ -3361,9 +3361,9 @@ class ParkingSystem {
         int[] word = new int[52];
         char[] chars = s.toCharArray();
         for (char aChar : chars) {
-            if (Character.isUpperCase(aChar)){
+            if (Character.isUpperCase(aChar)) {
                 // 如果字母是大写
-                if (word[aChar - 'A'] != 0){
+                if (word[aChar - 'A'] != 0) {
                     // 存在小写的字符
                     if ("".equals(res)) {
                         res = String.valueOf(aChar);
@@ -3373,7 +3373,7 @@ class ParkingSystem {
                         }
                     }
                 }
-                word[26 + aChar - 'A'] ++;
+                word[26 + aChar - 'A']++;
             } else if (Character.isLowerCase(aChar)) {
                 // 如果字母是小写
                 if (word[aChar - 'a' + 26] != 0) {
@@ -3386,7 +3386,7 @@ class ParkingSystem {
                         }
                     }
                 }
-                word[aChar - 'a'] ++;
+                word[aChar - 'a']++;
             }
         }
         return res;
@@ -3402,8 +3402,8 @@ class ParkingSystem {
         for (int i = 0; i < split.length; i++) {
             if (i % 2 == 0) {
                 for (char c : split[i].toCharArray()) {
-                    if ( c == '*') {
-                        cnt ++;
+                    if (c == '*') {
+                        cnt++;
                     }
                 }
             }
@@ -3415,12 +3415,12 @@ class ParkingSystem {
     public String decodeMessage(String key, String message) {
         key = key.replace(" ", "");
         char[] chars = key.toCharArray();
-        Map<Character,Character> map = new HashMap<>();
+        Map<Character, Character> map = new HashMap<>();
         int index = 0;
         for (char aChar : chars) {
             if (!map.containsKey(aChar)) {
-                map.put(aChar, (char)('a' + index));
-                index ++;
+                map.put(aChar, (char) ('a' + index));
+                index++;
             }
         }
 
@@ -3432,6 +3432,51 @@ class ParkingSystem {
             messageArr[i] = map.get(messageArr[i]);
         }
         return new String(messageArr);
+    }
+
+    // 6128. 最好的扑克手牌
+    public String bestHand(int[] ranks, char[] suits) {
+        // 同花判断
+        Set<Character> set = new HashSet<>();
+        for (char suit : suits) {
+            set.add(suit);
+        }
+        if (set.size() == 1) {
+            return "Flush";
+        }
+        String bestHand = "High Card";
+        // 三条和对子的判断
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int rank : ranks) {
+            map.put(rank, map.getOrDefault(rank, 0) + 1);
+        }
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() >= 3) {
+                bestHand = "Three of a Kind";
+                break;
+            } else if (integerIntegerEntry.getValue() == 2) {
+                bestHand = "Pair";
+            }
+        }
+        // 最后一种可能性 高牌
+        return bestHand;
+    }
+
+    // 6129. 全 0 子数组的数目
+    public long zeroFilledSubarray(int[] nums) {
+        long zeroCnt = 0;
+        long total = 0;
+        for (int num : nums) {
+            if (num == 0) {
+                zeroCnt ++;
+            } else {
+                total += zeroCnt * (zeroCnt + 1) / 2;
+                zeroCnt = 0;
+            }
+        }
+        total += zeroCnt * (zeroCnt + 1) / 2;
+
+        return total;
     }
 }
 
