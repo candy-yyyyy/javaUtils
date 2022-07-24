@@ -3478,6 +3478,37 @@ class ParkingSystem {
 
         return total;
     }
+
+    // 6124. 第一个出现两次的字母
+    public char repeatedCharacter(String s) {
+        Set<Character> set = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            if (set.contains(c)) {
+                return c;
+            }
+            set.add(c);
+        }
+        return 'a';
+    }
+
+    // 6125. 相等行列对
+    public int equalPairs(int[][] grid) {
+        int cnt = 0;
+        for (int i = 0; i < grid.length; i++) {
+            int[] newArr = new int[grid.length];
+            for (int j = 0; j < grid.length; j++) {
+                // 取到列数组
+                newArr[j] = grid[j][i];
+            }
+            // 判断行和列是否相同
+            for (int k = 0; k < grid.length; k++) {
+                if (Arrays.equals(newArr, grid[k])) {
+                    cnt ++;
+                }
+            }
+        }
+        return cnt;
+    }
 }
 
 /**
