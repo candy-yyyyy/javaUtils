@@ -3509,6 +3509,17 @@ class ParkingSystem {
         }
         return cnt;
     }
+    // 6132. 使数组中所有元素都等于零
+    public int minimumOperations(int[] nums) {
+        // 只需要计算出数组中存在几个非0的整数数字
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (num != 0) {
+                set.add(num);
+            }
+        }
+        return set.size();
+    }
 }
 
 /**
