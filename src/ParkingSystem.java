@@ -3520,6 +3520,42 @@ class ParkingSystem {
         }
         return set.size();
     }
+
+    // 6141. 合并相似的物品
+    public List<List<Integer>> mergeSimilarItems(int[][] items1, int[][] items2) {
+        Map<Integer,Integer> map = new TreeMap<>();
+        for (int[] ints : items1) {
+            map.put(ints[0], ints[1]);
+        }
+        for (int[] ints : items2) {
+            if (map.containsKey(ints[0])) {
+                map.put(ints[0], map.get(ints[0]) + ints[1]);
+            } else {
+                map.put(ints[0], ints[1]);
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            List<Integer> list = new ArrayList<>();
+            list.add(integerIntegerEntry.getKey());
+            list.add(integerIntegerEntry.getValue());
+            result.add(list);
+        }
+        return result;
+    }
+
+    // 6142. 统计坏数对的数目
+    public long countBadPairs(int[] nums) {
+        long count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (j - i != nums[j] - nums[i]) {
+                    count ++;
+                }
+            }
+        }
+        return count;
+    }
 }
 
 /**
