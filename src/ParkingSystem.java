@@ -3556,6 +3556,26 @@ class ParkingSystem {
         }
         return count;
     }
+
+    // 6136. 算术三元组的数目
+    public int arithmeticTriplets(int[] nums, int diff) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int record = 1;
+            int num = nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if (num + diff == nums[j]) {
+                    record ++;
+                    num = nums[j];
+                }
+                if (record == 3) {
+                    count ++;
+                    break;
+                }
+            }
+        }
+        return count;
+    }
 }
 
 /**
